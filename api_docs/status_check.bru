@@ -1,0 +1,27 @@
+meta {
+  name: status_check
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/api/status
+  body: none
+  auth: none
+}
+
+docs {
+  ## `/api/status` Endpoint
+  
+  This endpoint checks if the search service is running and responsive.
+  
+  - **Method**: `GET`
+  - **URL**: `/api/status`
+  - **Response**:
+    ```json
+    {
+      "status": "Search service is running"
+    }
+    ```
+  - **Purpose**: Verifies the service is operational. A `200 OK` response with the JSON above confirms it’s up.
+}
