@@ -1,0 +1,662 @@
+[
+    {
+        "id": 1,
+        "name": "Classic Library",
+        "address": "260 Spruce Ln, New York, NY 10001",
+        "description": "A quiet place to read and learn.",
+        "tags": [
+            "library"
+        ],
+        "suggest_input": [
+            "Classic Library",
+            "Classic Library NY",
+            "Classic Library NYC"
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Cafe in New York",
+        "address": "894 Walnut Ave, New York, NY 10001",
+        "description": "A cozy spot for coffee and pastries.",
+        "tags": [
+            "cafe"
+        ],
+        "suggest_input": [
+            "Cafe in New York",
+            "Cafe in NY",
+            "Cafe in NYC"
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Emma's Diner",
+        "address": "137 Chestnut Rd, New York, NY 10001",
+        "description": "Classic American dishes in a retro setting.",
+        "tags": [
+            "diner"
+        ],
+        "suggest_input": [
+            "Emma's Diner",
+            "Emma's Diner NY",
+            "Emma's Diner NYC"
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Grocery in New York",
+        "address": "913 Main St, New York, NY 10001",
+        "description": "Fresh produce and everyday essentials.",
+        "tags": [
+            "grocery"
+        ],
+        "suggest_input": [
+            "Grocery in New York",
+            "Grocery in NY",
+            "Grocery in NYC"
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Alex's Cafe",
+        "address": "851 Maple Ln, New York, NY 10001",
+        "description": "Serving artisanal coffee and fresh baked goods.",
+        "tags": [
+            "cafe"
+        ],
+        "suggest_input": [
+            "Alex's Cafe",
+            "Alex's Cafe NY",
+            "Alex's Cafe NYC"
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Library in New York",
+        "address": "725 Walnut Ave, New York, NY 10001",
+        "description": "A quiet place to read and learn.",
+        "tags": [
+            "library"
+        ],
+        "suggest_input": [
+            "Library in New York",
+            "Library in NY",
+            "Library in NYC"
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Hardware in New York",
+        "address": "817 Elm St, New York, NY 10001",
+        "description": "Tools and supplies for home improvement.",
+        "tags": [
+            "hardware"
+        ],
+        "suggest_input": [
+            "Hardware in New York",
+            "Hardware in NY",
+            "Hardware in NYC"
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Boutique in New York",
+        "address": "430 Spruce Ln, New York, NY 10001",
+        "description": "Unique clothing and accessories.",
+        "tags": [
+            "boutique"
+        ],
+        "suggest_input": [
+            "Boutique in New York",
+            "Boutique in NY",
+            "Boutique in NYC"
+        ]
+    },
+    {
+        "id": 9,
+        "name": "John's Pharmacy",
+        "address": "583 Elm St, New York, NY 10001",
+        "description": "Friendly service for all your pharmacy needs.",
+        "tags": [
+            "pharmacy"
+        ],
+        "suggest_input": [
+            "John's Pharmacy",
+            "John's Pharmacy NY",
+            "John's Pharmacy NYC"
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Modern Library",
+        "address": "394 Walnut Ave, New York, NY 10001",
+        "description": "Borrow books, attend events, and more.",
+        "tags": [
+            "library"
+        ],
+        "suggest_input": [
+            "Modern Library",
+            "Modern Library NY",
+            "Modern Library NYC"
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Lisa's Hardware",
+        "address": "721 Spruce Ln, Los Angeles, CA 90001",
+        "description": "Tools and supplies for home improvement.",
+        "tags": [
+            "hardware"
+        ],
+        "suggest_input": [
+            "Lisa's Hardware",
+            "Lisa's Hardware LA"
+        ]
+    },
+    {
+        "id": 12,
+        "name": "Cozy Diner",
+        "address": "618 Chestnut Rd, Los Angeles, CA 90001",
+        "description": "Classic American dishes in a retro setting.",
+        "tags": [
+            "diner"
+        ],
+        "suggest_input": [
+            "Cozy Diner",
+            "Cozy Diner LA"
+        ]
+    },
+    {
+        "id": 13,
+        "name": "Happy Boutique",
+        "address": "904 Spruce Ln, Los Angeles, CA 90001",
+        "description": "Fashion-forward styles for every occasion.",
+        "tags": [
+            "boutique"
+        ],
+        "suggest_input": [
+            "Happy Boutique",
+            "Happy Boutique LA"
+        ]
+    },
+    {
+        "id": 14,
+        "name": "Lisa's Cafe",
+        "address": "218 Main St, Los Angeles, CA 90001",
+        "description": "Serving artisanal coffee and fresh baked goods.",
+        "tags": [
+            "cafe"
+        ],
+        "suggest_input": [
+            "Lisa's Cafe",
+            "Lisa's Cafe LA"
+        ]
+    },
+    {
+        "id": 15,
+        "name": "Blue Diner",
+        "address": "776 Chestnut Rd, Los Angeles, CA 90001",
+        "description": "A family-friendly place for breakfast and lunch.",
+        "tags": [
+            "diner"
+        ],
+        "suggest_input": [
+            "Blue Diner",
+            "Blue Diner LA"
+        ]
+    },
+    {
+        "id": 16,
+        "name": "John's Pharmacy",
+        "address": "254 Spruce Ln, Los Angeles, CA 90001",
+        "description": "Prescriptions and health products.",
+        "tags": [
+            "pharmacy"
+        ],
+        "suggest_input": [
+            "John's Pharmacy",
+            "John's Pharmacy LA"
+        ]
+    },
+    {
+        "id": 17,
+        "name": "Cafe on Walnut Ave",
+        "address": "419 Elm St, Los Angeles, CA 90001",
+        "description": "A cozy spot for coffee and pastries.",
+        "tags": [
+            "cafe"
+        ],
+        "suggest_input": [
+            "Cafe on Walnut Ave",
+            "Cafe on Walnut Ave LA"
+        ]
+    },
+    {
+        "id": 18,
+        "name": "Friendly Boutique",
+        "address": "584 Chestnut Rd, Los Angeles, CA 90001",
+        "description": "Fashion-forward styles for every occasion.",
+        "tags": [
+            "boutique"
+        ],
+        "suggest_input": [
+            "Friendly Boutique",
+            "Friendly Boutique LA"
+        ]
+    },
+    {
+        "id": 19,
+        "name": "Lisa's Park",
+        "address": "447 Cedar Blvd, Los Angeles, CA 90001",
+        "description": "A green oasis in the city.",
+        "tags": [
+            "park"
+        ],
+        "suggest_input": [
+            "Lisa's Park",
+            "Lisa's Park LA"
+        ]
+    },
+    {
+        "id": 20,
+        "name": "Classic Cafe",
+        "address": "220 Spruce Ln, Los Angeles, CA 90001",
+        "description": "A cozy spot for coffee and pastries.",
+        "tags": [
+            "cafe"
+        ],
+        "suggest_input": [
+            "Classic Cafe",
+            "Classic Cafe LA"
+        ]
+    },
+    {
+        "id": 21,
+        "name": "Green Museum",
+        "address": "664 Oak Ave, Chicago, IL 60601",
+        "description": "Explore art and artifacts from around the world.",
+        "tags": [
+            "museum"
+        ],
+        "suggest_input": [
+            "Green Museum",
+            "Green Museum Chi"
+        ]
+    },
+    {
+        "id": 22,
+        "name": "Sunny Boutique",
+        "address": "601 Oak Ave, Chicago, IL 60601",
+        "description": "Fashion-forward styles for every occasion.",
+        "tags": [
+            "boutique"
+        ],
+        "suggest_input": [
+            "Sunny Boutique",
+            "Sunny Boutique Chi"
+        ]
+    },
+    {
+        "id": 23,
+        "name": "Cozy Boutique",
+        "address": "408 Elm St, Chicago, IL 60601",
+        "description": "Unique clothing and accessories.",
+        "tags": [
+            "boutique"
+        ],
+        "suggest_input": [
+            "Cozy Boutique",
+            "Cozy Boutique Chi"
+        ]
+    },
+    {
+        "id": 24,
+        "name": "Library in Chicago",
+        "address": "489 Chestnut Rd, Chicago, IL 60601",
+        "description": "Borrow books, attend events, and more.",
+        "tags": [
+            "library"
+        ],
+        "suggest_input": [
+            "Library in Chicago",
+            "Library in Chi"
+        ]
+    },
+    {
+        "id": 25,
+        "name": "Sarah's Cafe",
+        "address": "216 Walnut Ave, Chicago, IL 60601",
+        "description": "Serving artisanal coffee and fresh baked goods.",
+        "tags": [
+            "cafe"
+        ],
+        "suggest_input": [
+            "Sarah's Cafe",
+            "Sarah's Cafe Chi"
+        ]
+    },
+    {
+        "id": 26,
+        "name": "Sarah's Library",
+        "address": "513 Cedar Blvd, Chicago, IL 60601",
+        "description": "A quiet place to read and learn.",
+        "tags": [
+            "library"
+        ],
+        "suggest_input": [
+            "Sarah's Library",
+            "Sarah's Library Chi"
+        ]
+    },
+    {
+        "id": 27,
+        "name": "Grocery on Pine Rd",
+        "address": "912 Pine Rd, Chicago, IL 60601",
+        "description": "Fresh produce and everyday essentials.",
+        "tags": [
+            "grocery"
+        ],
+        "suggest_input": [
+            "Grocery on Pine Rd",
+            "Grocery on Pine Rd Chi"
+        ]
+    },
+    {
+        "id": 28,
+        "name": "Library in Chicago",
+        "address": "691 Spruce Ln, Chicago, IL 60601",
+        "description": "Borrow books, attend events, and more.",
+        "tags": [
+            "library"
+        ],
+        "suggest_input": [
+            "Library in Chicago",
+            "Library in Chi"
+        ]
+    },
+    {
+        "id": 29,
+        "name": "Grocery on Cedar Blvd",
+        "address": "75 Chestnut Rd, Chicago, IL 60601",
+        "description": "Your neighborhood market for quality goods.",
+        "tags": [
+            "grocery"
+        ],
+        "suggest_input": [
+            "Grocery on Cedar Blvd",
+            "Grocery on Cedar Blvd Chi"
+        ]
+    },
+    {
+        "id": 30,
+        "name": "Sarah's Pharmacy",
+        "address": "534 Pine Rd, Chicago, IL 60601",
+        "description": "Friendly service for all your pharmacy needs.",
+        "tags": [
+            "pharmacy"
+        ],
+        "suggest_input": [
+            "Sarah's Pharmacy",
+            "Sarah's Pharmacy Chi"
+        ]
+    },
+    {
+        "id": 31,
+        "name": "Hardware on Spruce Ln",
+        "address": "830 Chestnut Rd, Houston, TX 77001",
+        "description": "Tools and supplies for home improvement.",
+        "tags": [
+            "hardware"
+        ],
+        "suggest_input": [
+            "Hardware on Spruce Ln",
+            "Hardware on Spruce Ln Hou"
+        ]
+    },
+    {
+        "id": 32,
+        "name": "Emma's Pharmacy",
+        "address": "698 Chestnut Rd, Houston, TX 77001",
+        "description": "Friendly service for all your pharmacy needs.",
+        "tags": [
+            "pharmacy"
+        ],
+        "suggest_input": [
+            "Emma's Pharmacy",
+            "Emma's Pharmacy Hou"
+        ]
+    },
+    {
+        "id": 33,
+        "name": "Red Pharmacy",
+        "address": "690 Spruce Ln, Houston, TX 77001",
+        "description": "Prescriptions and health products.",
+        "tags": [
+            "pharmacy"
+        ],
+        "suggest_input": [
+            "Red Pharmacy",
+            "Red Pharmacy Hou"
+        ]
+    },
+    {
+        "id": 34,
+        "name": "Park on Walnut Ave",
+        "address": "32 Chestnut Rd, Houston, TX 77001",
+        "description": "Perfect for a picnic or a stroll.",
+        "tags": [
+            "park"
+        ],
+        "suggest_input": [
+            "Park on Walnut Ave",
+            "Park on Walnut Ave Hou"
+        ]
+    },
+    {
+        "id": 35,
+        "name": "Cafe in Houston",
+        "address": "713 Cedar Blvd, Houston, TX 77001",
+        "description": "A cozy spot for coffee and pastries.",
+        "tags": [
+            "cafe"
+        ],
+        "suggest_input": [
+            "Cafe in Houston",
+            "Cafe in Hou"
+        ]
+    },
+    {
+        "id": 36,
+        "name": "Modern Boutique",
+        "address": "299 Maple Ln, Houston, TX 77001",
+        "description": "Fashion-forward styles for every occasion.",
+        "tags": [
+            "boutique"
+        ],
+        "suggest_input": [
+            "Modern Boutique",
+            "Modern Boutique Hou"
+        ]
+    },
+    {
+        "id": 37,
+        "name": "Emma's Museum",
+        "address": "356 Walnut Ave, Houston, TX 77001",
+        "description": "Exhibits on history and culture.",
+        "tags": [
+            "museum"
+        ],
+        "suggest_input": [
+            "Emma's Museum",
+            "Emma's Museum Hou"
+        ]
+    },
+    {
+        "id": 38,
+        "name": "Pharmacy on Maple Ln",
+        "address": "13 Elm St, Houston, TX 77001",
+        "description": "Friendly service for all your pharmacy needs.",
+        "tags": [
+            "pharmacy"
+        ],
+        "suggest_input": [
+            "Pharmacy on Maple Ln",
+            "Pharmacy on Maple Ln Hou"
+        ]
+    },
+    {
+        "id": 39,
+        "name": "Diner on Pine Rd",
+        "address": "195 Pine Rd, Houston, TX 77001",
+        "description": "A family-friendly place for breakfast and lunch.",
+        "tags": [
+            "diner"
+        ],
+        "suggest_input": [
+            "Diner on Pine Rd",
+            "Diner on Pine Rd Hou"
+        ]
+    },
+    {
+        "id": 40,
+        "name": "Library on Main St",
+        "address": "889 Chestnut Rd, Houston, TX 77001",
+        "description": "Borrow books, attend events, and more.",
+        "tags": [
+            "library"
+        ],
+        "suggest_input": [
+            "Library on Main St",
+            "Library on Main St Hou"
+        ]
+    },
+    {
+        "id": 41,
+        "name": "John's Diner",
+        "address": "161 Pine Rd, Miami, FL 33101",
+        "description": "Classic American dishes in a retro setting.",
+        "tags": [
+            "diner"
+        ],
+        "suggest_input": [
+            "John's Diner",
+            "John's Diner Mia"
+        ]
+    },
+    {
+        "id": 42,
+        "name": "Bookstore in Miami",
+        "address": "302 Spruce Ln, Miami, FL 33101",
+        "description": "Discover your next favorite read here.",
+        "tags": [
+            "bookstore"
+        ],
+        "suggest_input": [
+            "Bookstore in Miami",
+            "Bookstore in Mia"
+        ]
+    },
+    {
+        "id": 43,
+        "name": "Happy Grocery",
+        "address": "714 Oak Ave, Miami, FL 33101",
+        "description": "Fresh produce and everyday essentials.",
+        "tags": [
+            "grocery"
+        ],
+        "suggest_input": [
+            "Happy Grocery",
+            "Happy Grocery Mia"
+        ]
+    },
+    {
+        "id": 44,
+        "name": "Red Pharmacy",
+        "address": "185 Walnut Ave, Miami, FL 33101",
+        "description": "Friendly service for all your pharmacy needs.",
+        "tags": [
+            "pharmacy"
+        ],
+        "suggest_input": [
+            "Red Pharmacy",
+            "Red Pharmacy Mia"
+        ]
+    },
+    {
+        "id": 45,
+        "name": "Maria's Cafe",
+        "address": "79 Elm St, Miami, FL 33101",
+        "description": "A cozy spot for coffee and pastries.",
+        "tags": [
+            "cafe"
+        ],
+        "suggest_input": [
+            "Maria's Cafe",
+            "Maria's Cafe Mia"
+        ]
+    },
+    {
+        "id": 46,
+        "name": "Pharmacy on Spruce Ln",
+        "address": "989 Walnut Ave, Miami, FL 33101",
+        "description": "Friendly service for all your pharmacy needs.",
+        "tags": [
+            "pharmacy"
+        ],
+        "suggest_input": [
+            "Pharmacy on Spruce Ln",
+            "Pharmacy on Spruce Ln Mia"
+        ]
+    },
+    {
+        "id": 47,
+        "name": "Cafe in Miami",
+        "address": "431 Oak Ave, Miami, FL 33101",
+        "description": "Serving artisanal coffee and fresh baked goods.",
+        "tags": [
+            "cafe"
+        ],
+        "suggest_input": [
+            "Cafe in Miami",
+            "Cafe in Mia"
+        ]
+    },
+    {
+        "id": 48,
+        "name": "Library on Elm St",
+        "address": "10 Oak Ave, Miami, FL 33101",
+        "description": "A quiet place to read and learn.",
+        "tags": [
+            "library"
+        ],
+        "suggest_input": [
+            "Library on Elm St",
+            "Library on Elm St Mia"
+        ]
+    },
+    {
+        "id": 49,
+        "name": "Cafe on Pine Rd",
+        "address": "762 Walnut Ave, Miami, FL 33101",
+        "description": "A cozy spot for coffee and pastries.",
+        "tags": [
+            "cafe"
+        ],
+        "suggest_input": [
+            "Cafe on Pine Rd",
+            "Cafe on Pine Rd Mia"
+        ]
+    },
+    {
+        "id": 50,
+        "name": "Grocery in Miami",
+        "address": "298 Chestnut Rd, Miami, FL 33101",
+        "description": "Fresh produce and everyday essentials.",
+        "tags": [
+            "grocery"
+        ],
+        "suggest_input": [
+            "Grocery in Miami",
+            "Grocery in Mia"
+        ]
+    }
+]
