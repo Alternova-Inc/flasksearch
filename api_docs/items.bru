@@ -1,0 +1,225 @@
+meta {
+  name: Items API
+  type: http
+  seq: 2
+}
+
+# Create/Update Item
+PUT {{host}}/api/v1/items
+headers {
+  Content-Type: application/json
+  X-API-Token: {{api_token}}
+}
+
+body:json {
+  "id": "123",
+  "name": "Sample Item",
+  "description": "A detailed description of the item",
+  "tags": ["tag1", "tag2"],
+  "suggest_input": ["Sample Item", "Sample"],
+  "metadata": {
+    "type": "establishment",
+    "address": "123 Main St",
+    "city": "New York",
+    "state": "NY"
+  }
+}
+
+docs {
+  title: "Create or Update Item"
+  description: '''
+  Create a new item or update an existing one in the search index.
+  
+  The endpoint is generic and can handle any type of item with flexible metadata.
+  Required fields:
+  - id: Unique identifier for the item
+  - name: Name of the item
+  - suggest_input: Array of strings for autocomplete suggestions
+  
+  Optional fields:
+  - description: Detailed description
+  - tags: Array of tags for filtering
+  - metadata: Object containing any additional fields specific to the item type
+  '''
+}
+
+response 200 {
+  "message": "Item successfully indexed",
+  "id": "123",
+  "index": "items"
+}
+
+response 400 {
+  "error": "Invalid request body"
+}
+
+response 401 {
+  "error": "Invalid or missing API token"
+}
+
+response 500 {
+  "error": "Failed to index item"
+}
+
+# Bulk Create/Update Items
+POST {{host}}/api/v1/items/bulk
+headers {
+  Content-Type: application/json
+  X-API-Token: {{api_token}}
+}
+
+body:json {
+  "items": [
+    {
+      "id": "123",
+      "name": "First Item",
+      "suggest_input": ["First Item"],
+      "metadata": {}
+    },
+    {
+      "id": "124",
+      "name": "Second Item",
+      "suggest_input": ["Second Item"],
+      "metadata": {}
+    }
+  ]
+}
+
+docs {
+  title: "Bulk Create or Update Items"
+  description: '''
+  Create or update multiple items in a single request.
+  
+  This endpoint accepts an array of items and processes them in bulk for better performance.
+  Each item follows the same schema as the single item endpoint.
+  '''
+}
+
+response 200 {
+  "message": "Bulk operation completed",
+  "success_count": 2,
+  "failed_count": 0,
+  "failed_items": []
+}
+
+# Get Item by ID
+GET {{host}}/api/v1/items/:id
+headers {
+  X-API-Token: {{api_token}}
+}
+
+docs {
+  title: "Get Item by ID"
+  description: "Retrieve a single item by its ID"
+}
+
+response 200 {
+  "id": "123",
+  "name": "Sample Item",
+  "description": "A detailed description",
+  "tags": ["tag1", "tag2"],
+  "metadata": {}
+}
+
+response 404 {
+  "error": "Item not found"
+}
+
+# Delete Item
+DELETE {{host}}/api/v1/items/:id
+headers {
+  X-API-Token: {{api_token}}
+}
+
+docs {
+  title: "Delete Item"
+  description: "Remove an item from the search index by its ID"
+}
+
+response 200 {
+  "message": "Item successfully deleted",
+  "id": "123"
+}
+
+response 404 {
+  "error": "Item not found"
+}
+
+# Search Items
+POST {{host}}/api/v1/items/search
+headers {
+  Content-Type: application/json
+  X-API-Token: {{api_token}}
+}
+
+body:json {
+  "query": "search term",
+  "filters": {
+    "tags": ["tag1"],
+    "metadata.type": "establishment"
+  },
+  "page": 1,
+  "size": 10,
+  "sort": [
+    {
+      "field": "name",
+      "order": "asc"
+    }
+  ]
+}
+
+docs {
+  title: "Search Items"
+  description: '''
+  Search for items using a query string and optional filters.
+  
+  Features:
+  - Full-text search across item fields
+  - Filter by tags and metadata fields
+  - Pagination support
+  - Sorting options
+  - Faceted search capabilities
+  '''
+}
+
+response 200 {
+  "total": 42,
+  "page": 1,
+  "size": 10,
+  "items": [],
+  "facets": {
+    "tags": [
+      {"key": "tag1", "count": 15},
+      {"key": "tag2", "count": 27}
+    ],
+    "metadata.type": [
+      {"key": "establishment", "count": 30},
+      {"key": "product", "count": 12}
+    ]
+  }
+}
+
+# Autocomplete
+GET {{host}}/api/v1/items/suggest?q=sam
+headers {
+  X-API-Token: {{api_token}}
+}
+
+docs {
+  title: "Autocomplete Suggestions"
+  description: '''
+  Get autocomplete suggestions based on a partial query.
+  
+  Uses the suggest_input field for generating suggestions.
+  Returns up to 5 suggestions by default.
+  '''
+}
+
+response 200 {
+  "suggestions": [
+    {
+      "text": "Sample Item",
+      "id": "123"
+    }
+  ]
+} 
