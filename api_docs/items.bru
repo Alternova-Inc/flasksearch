@@ -40,6 +40,8 @@ docs {
   - description: Detailed description
   - tags: Array of tags for filtering
   - metadata: Object containing any additional fields specific to the item type
+  
+  Authentication required via X-API-Token header.
   '''
 }
 
@@ -54,7 +56,8 @@ response 400 {
 }
 
 response 401 {
-  "error": "Invalid or missing API token"
+  "error": "Unauthorized",
+  "detail": "Invalid or missing API token"
 }
 
 response 500 {
@@ -92,6 +95,8 @@ docs {
   
   This endpoint accepts an array of items and processes them in bulk for better performance.
   Each item follows the same schema as the single item endpoint.
+  
+  Authentication required via X-API-Token header.
   '''
 }
 
@@ -102,6 +107,19 @@ response 200 {
   "failed_items": []
 }
 
+response 400 {
+  "error": "Invalid request body"
+}
+
+response 401 {
+  "error": "Unauthorized",
+  "detail": "Invalid or missing API token"
+}
+
+response 500 {
+  "error": "Failed to process bulk operation"
+}
+
 # Get Item by ID
 GET {{host}}/api/v1/items/:id
 headers {
@@ -110,7 +128,11 @@ headers {
 
 docs {
   title: "Get Item by ID"
-  description: "Retrieve a single item by its ID"
+  description: '''
+  Retrieve a single item by its ID
+  
+  Authentication required via X-API-Token header.
+  '''
 }
 
 response 200 {
@@ -119,6 +141,11 @@ response 200 {
   "description": "A detailed description",
   "tags": ["tag1", "tag2"],
   "metadata": {}
+}
+
+response 401 {
+  "error": "Unauthorized",
+  "detail": "Invalid or missing API token"
 }
 
 response 404 {
@@ -133,12 +160,21 @@ headers {
 
 docs {
   title: "Delete Item"
-  description: "Remove an item from the search index by its ID"
+  description: '''
+  Remove an item from the search index by its ID
+  
+  Authentication required via X-API-Token header.
+  '''
 }
 
 response 200 {
   "message": "Item successfully deleted",
   "id": "123"
+}
+
+response 401 {
+  "error": "Unauthorized",
+  "detail": "Invalid or missing API token"
 }
 
 response 404 {
@@ -179,6 +215,8 @@ docs {
   - Pagination support
   - Sorting options
   - Faceted search capabilities
+  
+  Authentication required via X-API-Token header.
   '''
 }
 
@@ -199,6 +237,15 @@ response 200 {
   }
 }
 
+response 400 {
+  "error": "Invalid search parameters"
+}
+
+response 401 {
+  "error": "Unauthorized",
+  "detail": "Invalid or missing API token"
+}
+
 # Autocomplete
 GET {{host}}/api/v1/items/suggest?q=sam
 headers {
@@ -212,6 +259,8 @@ docs {
   
   Uses the suggest_input field for generating suggestions.
   Returns up to 5 suggestions by default.
+  
+  Authentication required via X-API-Token header.
   '''
 }
 
@@ -222,4 +271,13 @@ response 200 {
       "id": "123"
     }
   ]
+}
+
+response 400 {
+  "error": "Query parameter 'q' is required"
+}
+
+response 401 {
+  "error": "Unauthorized",
+  "detail": "Invalid or missing API token"
 } 
