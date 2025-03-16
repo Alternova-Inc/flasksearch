@@ -1,0 +1,42 @@
+meta {
+  name: items-deleteById
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{host}}/api/v1/items/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 
+}
+
+headers {
+  X-API-Token: {{api_token}}
+}
+
+docs {
+  title: "Delete Item"
+    description: '''
+    Remove an item from the search index by its ID
+    
+    Authentication required via X-API-Token header.
+    '''
+  
+  response 200 {
+    "message": "Item successfully deleted",
+    "id": "123"
+  }
+  
+  response 401 {
+    "error": "Unauthorized",
+    "detail": "Invalid or missing API token"
+  }
+  
+  response 404 {
+    "error": "Item not found"
+  }
+}
