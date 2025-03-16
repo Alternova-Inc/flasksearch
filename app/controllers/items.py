@@ -80,6 +80,12 @@ def delete_item(item_id):
 def search_items(query=None, zipcode=None, size=20):
     """
     Search for items using a multi-field query and sort by distance to zipcode.
+    Priority order:
+    1. Distance (closest zipcode)
+    2. Exact name matches
+    3. Partial description matches
+    4. Tags and suggest_input matches
+    5. Fuzzy name matches
     
     Args:
         query (str): The search query (required)
@@ -109,61 +115,71 @@ def search_items(query=None, zipcode=None, size=20):
         es = current_app.elasticsearch
         index_name = os.getenv('ELASTICSEARCH_INDEX', 'items')
         
-        # Initialize search body with common parameters
+        # Build the query with all search conditions
         search_body = {
             "size": size,
             "_source": True,
             "track_total_hits": True,
-            "sort": [
-                {
-                    "_script": {
-                        "type": "number",
+            "query": {
+                "function_score": {
+                    "query": {
+                        "bool": {
+                            "should": [
+                                # Priority 2: Exact name matches (highest text relevance)
+                                {"match_phrase": {"name": {"query": query, "boost": 15}}},
+                                # Priority 3: Partial description matches
+                                {"match": {"description": {
+                                    "query": query,
+                                    "boost": 8,
+                                    "operator": "and",  # All terms should match for higher precision
+                                    "minimum_should_match": "60%"  # But allow some terms to be missing
+                                }}},
+                                # Priority 4: Tags and suggest_input
+                                {"match": {"tags": {"query": query, "boost": 4}}},
+                                {"match": {"suggest_input": {"query": query, "boost": 4}}},
+                                # Priority 5: Fuzzy name matches (lowest priority for text)
+                                {"match": {"name": {
+                                    "query": query,
+                                    "fuzziness": "AUTO",
+                                    "boost": 2,
+                                    "prefix_length": 2  # Require first 2 chars to match to reduce noise
+                                }}}
+                            ],
+                            "minimum_should_match": 1
+                        }
+                    },
+                    # Priority 1: Distance (highest overall priority)
+                    "script_score": {
                         "script": {
                             "lang": "painless",
                             "source": """
                                 try {
                                     def addr = doc['address'].value;
-                                    if (addr == null) { return 99999; }
+                                    if (addr == null) { return 0.0; }
                                     
                                     def matcher = /\\b(\\d{5})\\b/.matcher(addr);
-                                    if (!matcher.find()) { return 99999; }
+                                    if (!matcher.find()) { return 0.0; }
                                     
                                     def itemZip = matcher.group(1);
                                     def searchZip = params.zip;
+                                    def distance = Math.abs(Integer.parseInt(itemZip) - Integer.parseInt(searchZip));
                                     
-                                    return Math.abs(Integer.parseInt(itemZip) - Integer.parseInt(searchZip));
+                                    // Convert distance to a score between 0 and 1
+                                    // Closer distances get higher scores
+                                    // Using a steeper curve to prioritize closer locations more strongly
+                                    return Math.pow(Math.max(0.0, 1.0 - (distance / 5000.0)), 2);
                                 } catch (Exception e) {
-                                    return 99999;
+                                    return 0.0;
                                 }
                             """,
                             "params": {
                                 "zip": zipcode
                             }
-                        },
-                        "order": "asc"
-                    }
-                },
-                "_score"
-            ]
-        }
-
-        # Build the query with all search conditions
-        search_body["query"] = {
-            "bool": {
-                "must": [
-                    {
-                        "bool": {
-                            "should": [
-                                {"match_phrase": {"name": {"query": query, "boost": 10}}},
-                                {"match": {"name": {"query": query, "fuzziness": "AUTO", "boost": 3}}},
-                                {"match": {"description": {"query": query, "boost": 3}}},
-                                {"match": {"tags": {"query": query, "boost": 4}}},
-                                {"match": {"suggest_input": {"query": query, "boost": 4}}}
-                            ],
-                            "minimum_should_match": 1
                         }
-                    }
-                ]
+                    },
+                    "boost_mode": "multiply",
+                    "score_mode": "multiply"
+                }
             }
         }
 
@@ -174,8 +190,7 @@ def search_items(query=None, zipcode=None, size=20):
         hits = result['hits']['hits']
         items = [{
             **hit['_source'],
-            '_score': hit['_score'],
-            'distance': hit['sort'][0] if 'sort' in hit and len(hit['sort']) > 0 and hit['sort'][0] != 99999 else None
+            '_score': hit['_score']
         } for hit in hits]
 
         return jsonify({
