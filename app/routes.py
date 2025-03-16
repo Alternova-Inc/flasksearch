@@ -1,4 +1,5 @@
 # app/routes.py
+from urllib import request
 from flask import Blueprint, jsonify
 from .middleware.auth import require_api_token
 from .controllers.items import get_item, create_or_update_item, delete_item
@@ -21,6 +22,13 @@ def update_item():
 @require_api_token
 def delete_item_route(id):
     return delete_item(id)
+
+@items_bp.route('/api/v1/items/search', methods=['GET'])
+@require_api_token
+def search_items():
+    query = request.args.get('query', '')
+    zipcode = request.args.get('zipcode', '')
+    return jsonify(search_items(query, zipcode))
 
 # Health check route
 def init_routes(app):
