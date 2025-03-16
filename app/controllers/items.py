@@ -6,7 +6,7 @@ def get_item(id):
     """Get a single item by its ID."""
     try:
         es = current_app.elasticsearch
-        result = es.get(index=os.getenv('ELASTICSEARCH_INDEX', 'items'), id=id)
+        result = es.get(index=os.getenv('ELASTICSEARCH_INDEX', 'items'), id=str(id))
         return jsonify(result['_source']), 200
     except NotFoundError:
         return jsonify({"error": "Item not found"}), 404
@@ -33,17 +33,21 @@ def create_or_update_item():
         data.setdefault('tags', [])
         data.setdefault('metadata', {})
 
+        # Ensure id is converted to string for consistency
+        item_id = str(data['id'])
+        data['id'] = item_id
+
         es = current_app.elasticsearch
         result = es.index(
             index=os.getenv('ELASTICSEARCH_INDEX', 'items'),
-            id=data['id'],
+            id=item_id,
             document=data,
             refresh=True  # Make the document immediately searchable
         )
 
         return jsonify({
             "message": "Item successfully indexed",
-            "id": data['id'],
+            "id": item_id,
             "index": result['_index']
         }), 200
 

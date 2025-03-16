@@ -36,7 +36,7 @@ def test_get_item(client, auth_headers, sample_item):
     # Check response
     assert response.status_code == 200
     data = json.loads(response.data)
-    assert data['id'] == sample_item['id']
+    assert data['id'] == str(sample_item['id'])
     assert data['name'] == sample_item['name']
     assert data['description'] == sample_item['description']
     assert data['tags'] == sample_item['tags']

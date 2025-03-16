@@ -1,0 +1,9 @@
+Metadata-Version: 2.2
+Name: flasksearch
+Version: 0.1.0
+License-File: LICENSE
+Requires-Dist: flask
+Requires-Dist: elasticsearch
+Requires-Dist: python-dotenv
+Requires-Dist: flask-cors
+Dynamic: requires-dist

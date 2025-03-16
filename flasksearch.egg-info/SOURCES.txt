@@ -1,0 +1,12 @@
+LICENSE
+README.md
+setup.py
+app/__init__.py
+app/routes.py
+app/search_logic.py
+flasksearch.egg-info/PKG-INFO
+flasksearch.egg-info/SOURCES.txt
+flasksearch.egg-info/dependency_links.txt
+flasksearch.egg-info/requires.txt
+flasksearch.egg-info/top_level.txt
+tests/test_items.py
