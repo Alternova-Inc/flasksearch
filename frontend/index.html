@@ -8,8 +8,10 @@
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Mock API (remove when real API is implemented) -->
-    <script src="mock-api.js"></script>
+    <!-- Environment variables loader -->
+    <script src=".env.js"></script>
+    <!-- API Client -->
+    <script src="api-client.js"></script>
     <style>
         .suggestion-item:hover {
             background-color: #f3f4f6;
@@ -28,7 +30,7 @@
 </head>
 <body class="bg-gray-100 min-h-screen">
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-center mb-8">Search Suggestions</h1>
+        <h1 class="text-3xl font-bold text-center mb-8">Search Results</h1>
         
         <div class="max-w-2xl mx-auto">
             <!-- Search Form -->
@@ -38,12 +40,6 @@
                     type="text"
                     placeholder="Type to search..."
                     class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    hx-post="/api/v1/suggestions"
-                    hx-trigger="keyup changed delay:300ms, search"
-                    hx-target="#suggestions-container"
-                    hx-indicator="#search-indicator"
-                    hx-include="#zipcode-input"
-                    hx-headers='{"Content-Type": "application/json", "X-API-Token": "YOUR_API_TOKEN_HERE"}'
                     name="query"
                 >
                 <div id="search-indicator" class="htmx-indicator absolute right-3 top-3">
@@ -65,9 +61,19 @@
                 >
             </div>
             
+            <!-- Search Button -->
+            <div class="mb-4">
+                <button 
+                    id="search-button"
+                    class="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    Search
+                </button>
+            </div>
+            
             <!-- Search Stats -->
             <div id="search-stats" class="mt-2 text-sm text-gray-600 hidden">
-                <span id="results-count">0</span> results found in <span id="search-time">0</span>ms
+                Showing <span id="results-count">0</span> of <span id="total-results">0</span> results in <span id="search-time">0</span>ms
             </div>
             
             <!-- Suggestions Container -->
@@ -79,83 +85,85 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('search-input');
+            const zipCodeInput = document.getElementById('zipcode-input');
+            const searchButton = document.getElementById('search-button');
             const searchStats = document.getElementById('search-stats');
             const resultsCount = document.getElementById('results-count');
+            const totalResults = document.getElementById('total-results');
             const searchTime = document.getElementById('search-time');
             const suggestionsContainer = document.getElementById('suggestions-container');
+            const searchIndicator = document.getElementById('search-indicator');
             
-            // Override HTMX request for the suggestions endpoint until real API is implemented
-            document.body.addEventListener('htmx:beforeRequest', async function(event) {
-                // Only intercept requests to the suggestions endpoint
-                if (event.detail.requestConfig.path === '/api/v1/suggestions') {
-                    // Prevent the actual HTMX request
-                    event.preventDefault();
+            // Function to perform search
+            async function performSearch() {
+                // Show the loading indicator
+                searchIndicator.classList.add('htmx-request');
+                
+                // Get the query from the input
+                const query = searchInput.value.trim();
+                const zipcode = zipCodeInput.value.trim();
+                
+                if (query === '' && zipcode === '') {
+                    suggestionsContainer.innerHTML = '';
+                    searchStats.classList.add('hidden');
+                    searchIndicator.classList.remove('htmx-request');
+                    return;
+                }
+                
+                try {
+                    // Use our API client to handle the search
+                    const result = await window.apiClient.handleSearch(query, zipcode);
                     
-                    // Show the loading indicator
-                    document.getElementById('search-indicator').classList.add('htmx-request');
+                    // Update the suggestions container
+                    suggestionsContainer.innerHTML = result.html;
                     
-                    // Get the query from the input
-                    const query = searchInput.value.trim();
-                    const zipcode = document.getElementById('zipcode-input').value.trim();
-                    
-                    if (query === '' && zipcode === '') {
-                        suggestionsContainer.innerHTML = '';
-                        searchStats.classList.add('hidden');
-                        document.getElementById('search-indicator').classList.remove('htmx-request');
-                        return;
-                    }
-                    
-                    try {
-                        // Prepare data as it would be sent in a real JSON POST request
-                        const requestData = {
-                            query: query,
-                            zipcode: zipcode
-                        };
-                        
-                        // Use our mock API to handle the search
-                        const result = await window.mockApi.handleSearch(query, zipcode);
-                        
-                        // Update the suggestions container
-                        suggestionsContainer.innerHTML = result.html;
-                        
-                        // Update stats
-                        resultsCount.textContent = result.meta.count;
-                        searchTime.textContent = result.meta.time_ms;
-                        searchStats.classList.remove('hidden');
-                    } catch (error) {
-                        console.error('Error handling search:', error);
-                        suggestionsContainer.innerHTML = '<div class="p-4 text-center text-red-500">Error processing search</div>';
-                    } finally {
-                        // Hide the loading indicator
-                        document.getElementById('search-indicator').classList.remove('htmx-request');
-                    }
+                    // Update stats
+                    resultsCount.textContent = result.meta.count;
+                    totalResults.textContent = result.meta.total || result.meta.count;
+                    searchTime.textContent = result.meta.time_ms;
+                    searchStats.classList.remove('hidden');
+                } catch (error) {
+                    console.error('Error handling search:', error);
+                    suggestionsContainer.innerHTML = '<div class="p-4 text-center text-red-500">Error processing search</div>';
+                } finally {
+                    // Hide the loading indicator
+                    searchIndicator.classList.remove('htmx-request');
+                }
+            }
+            
+            // Add event listener for search button
+            searchButton.addEventListener('click', performSearch);
+            
+            // Add event listener for Enter key in search input
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    performSearch();
                 }
             });
             
-            // Clear suggestions when input is empty
+            // Add event listener for Enter key in zipcode input
+            zipCodeInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Add debounced search for typing
+            let debounceTimer;
             searchInput.addEventListener('input', function() {
+                // Clear previous timer
+                clearTimeout(debounceTimer);
+                
                 if (this.value.trim() === '') {
                     suggestionsContainer.innerHTML = '';
                     searchStats.classList.add('hidden');
+                    return;
                 }
+                
+                // Set new timer
+                debounceTimer = setTimeout(performSearch, 300);
             });
         });
     </script>
-
-    <!-- Template for when no API is available yet -->
-    <template id="mock-suggestions">
-        <div class="p-4 border-b border-gray-200 suggestion-item">
-            <div class="font-medium">Suggestion 1</div>
-            <div class="text-sm text-gray-600">Category: Restaurant</div>
-        </div>
-        <div class="p-4 border-b border-gray-200 suggestion-item">
-            <div class="font-medium">Suggestion 2</div>
-            <div class="text-sm text-gray-600">Category: Cafe</div>
-        </div>
-        <div class="p-4 border-b border-gray-200 suggestion-item">
-            <div class="font-medium">Suggestion 3</div>
-            <div class="text-sm text-gray-600">Category: Bar</div>
-        </div>
-    </template>
 </body>
 </html> 

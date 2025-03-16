@@ -1,35 +1,54 @@
-# Search Suggestions Frontend
+# Flask Search Frontend
 
-A simple HTML + JavaScript application that provides a search interface with suggestions.
+This is the frontend for the Flask Search application. It provides a user interface for searching and displaying suggestions from the backend API.
+
+## Setup
+
+1. Make sure the backend API is running (typically on http://localhost:5000)
+
+2. Create a `.env` file in the frontend directory:
+   ```
+   cp .env.example .env
+   ```
+
+3. Edit the `.env` file and add your API token:
+   ```
+   API_URL=http://localhost:5000
+   API_TOKEN=your_api_token_here
+   ```
+
+4. Start the development server:
+   ```
+   python server.py
+   ```
+
+5. Open your browser and navigate to http://localhost:8080
 
 ## Features
 
 - Real-time search suggestions as you type
-- Display of search statistics (number of results and search time)
-- Responsive design using Tailwind CSS
+- Location-based search using zipcode
+- Responsive design that works on mobile and desktop
+
+## Development
+
+The frontend is built with:
+- HTML, CSS, and JavaScript
 - HTMX for AJAX requests
+- Tailwind CSS for styling
 
-## Getting Started
+### Files
 
-### Running the Frontend
+- `index.html` - Main HTML file
+- `api-client.js` - Client for connecting to the backend API
+- `.env.js` - Script to load environment variables
+- `server.py` - Simple development server
 
-1. Start the frontend server:
+## Connecting to the Backend
 
-```bash
-python server.py
-```
+The frontend connects to the backend API using the `api-client.js` file. The API URL and token are configured in the `.env` file.
 
-2. Open your browser and navigate to:
-
-```
-http://localhost:8080
-```
-
-### How It Works
-
-- The search input uses HTMX to make POST requests to the `/api/v1/suggestions` endpoint
-- Currently using a mock API implementation until the real backend endpoint is created
-- The mock API simulates network delay and filters suggestions based on the query
+By default, the frontend expects the backend API to be running at http://localhost:5000. You can change this by updating the `API_URL` in the `.env` file.
 
 ## API Endpoints
 
@@ -37,17 +56,13 @@ The backend provides one main endpoint:
 
 1. **Suggestions Endpoint**
    - URL: `/api/v1/suggestions`
-   - Method: POST
+   - Method: GET
    - Headers: 
      - `Content-Type: application/json`
      - `X-API-Token: YOUR_API_TOKEN`
-   - Body:
-     ```json
-     {
-       "query": "search term",
-       "zipcode": "10001"
-     }
-     ```
+   - Query Parameters:
+     - `query`: Search term (optional)
+     - `zipcode`: Location zipcode (optional)
    - Response: List of suggestions with metadata
 
 ## Integration with Backend
