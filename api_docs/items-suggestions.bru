@@ -1,0 +1,73 @@
+meta {
+  name: items-suggestions
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{host}}//api/v1/suggestions
+  body: none
+  auth: none
+}
+
+headers {
+  X-API-Token: {{api_token}}
+}
+
+docs {
+  title: "Suggestions Endpoint"
+    description:
+    This endpoint provides search suggestions based on the input query and optional zipcode.
+    
+    The suggestions are filtered from the items in the Elasticsearch index and can be sorted by distance
+    if a zipcode is provided. The response includes a list of suggestions along with metadata such as
+    the total count of results and the time taken for the search.
+  
+    ## Request Example
+    POST /api/v1/suggestions
+    {
+      "query": "cafe",
+      "zipcode": "10001"
+    }
+  
+    ## Response Example
+    200 OK
+    {
+      "items": [
+        {
+          "id": 1,
+          "name": "Cafe Delight",
+          "category": "Cafe",
+          "tags": ["coffee", "breakfast", "wifi"],
+          "distance_km": 1.2
+        },
+        ...
+      ],
+      "meta": {
+        "total": 5,
+        "count": 2,
+        "time_ms": 150,
+        "query": "cafe",
+        "zipcode": "10001"
+      }
+    }
+  
+    ## Error Responses
+    400 Bad Request
+    {
+      "error": "Invalid request body",
+      "detail": "Missing required field: query"
+    }
+  
+    401 Unauthorized
+    {
+      "error": "Unauthorized",
+      "detail": "Invalid or missing API token"
+    }
+  
+    500 Internal Server Error
+    {
+      "error": "Failed to retrieve suggestions",
+      "detail": "Error message"
+    }
+}
