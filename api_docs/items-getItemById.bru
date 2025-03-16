@@ -1,0 +1,47 @@
+meta {
+  name: items-getItemById
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{host}}/api/v1/items/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 
+}
+
+headers {
+  X-API-Token: {{api_token}}
+}
+
+docs {
+  docs {
+    title: "Get Item by ID"
+    description: '''
+    Retrieve a single item by its ID
+    
+    Authentication required via X-API-Token header.
+    '''
+  }
+  
+  response 200 {
+    "id": "123",
+    "name": "Sample Item",
+    "description": "A detailed description",
+    "tags": ["tag1", "tag2"],
+    "metadata": {}
+  }
+  
+  response 401 {
+    "error": "Unauthorized",
+    "detail": "Invalid or missing API token"
+  }
+  
+  response 404 {
+    "error": "Item not found"
+  }
+}
