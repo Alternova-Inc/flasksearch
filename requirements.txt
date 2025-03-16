@@ -1,6 +1,26 @@
-flask==3.0.2
+blinker @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_11lor_igbs/croot/blinker_1737449046432/work
+certifi==2025.1.31
+charset-normalizer==3.4.1
+click @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/click_1699237822453/work
+coverage==7.6.12
+elastic-transport==8.17.1
 elasticsearch==8.12.1
+Flask==3.0.2
+Flask-Cors==4.0.0
+-e git+ssh://git@github.com/Alternova-Inc/flasksearch.git@330715cbd7a99233844a450d757c2de97819ffd7#egg=flasksearch
+idna==3.10
+iniconfig==2.0.0
+itsdangerous @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_00jdi1gu23/croot/itsdangerous_1716533346702/work
+Jinja2 @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_2cnn4kenrm/croot/jinja2_1741710859444/work
+MarkupSafe @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_1f_uj4vxik/croot/markupsafe_1738584045311/work
+packaging==24.2
+pluggy==1.5.0
+pytest==8.0.2
+pytest-cov==6.0.0
 python-dotenv==1.0.1
 requests==2.31.0
-pytest==8.0.2
-flask-cors==4.0.0
+setuptools==75.8.0
+tqdm==4.67.1
+urllib3==2.3.0
+Werkzeug @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_87am5fxnsf/croot/werkzeug_1737448721856/work
+wheel==0.45.1
