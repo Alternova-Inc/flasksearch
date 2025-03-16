@@ -24,19 +24,20 @@ def delete_item_route(id):
     return delete_item(id)
 
 # Suggestions endpoint for autocomplete
-@items_bp.route('/api/v1/suggestions', methods=['POST'])
+@items_bp.route('/api/v1/suggestions', methods=['GET'])
 @require_api_token
 def get_suggestions():
-    # Get query from POST body
-    query = request.form.get('query', '')
-    zipcode = request.form.get('zipcode', '')
+    # Get query from URL parameters
+    query = request.args.get('query')
+    zipcode = request.args.get('zipcode')
     
-    # Also check JSON data if Content-Type is application/json
-    if not query and request.is_json:
-        data = request.json
-        query = data.get('query', '')
-        zipcode = data.get('zipcode', '')
-    
+    # Check if required parameters are present
+    if not query or not zipcode:
+        return jsonify({
+            "error": "Bad request",
+            "detail": "Missing required parameters: query and zipcode are required"
+        }), 400
+        
     # Use the search function with a smaller result size
     return search_items(query, zipcode, 10)
 
