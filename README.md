@@ -10,6 +10,7 @@ A lightweight and powerful search engine microservice built with Flask and Elast
 - 📚 RESTful API design
 - 🌐 CORS support
 - 📝 API documentation using Bruno
+- ✅ Comprehensive test suite
 
 ## Prerequisites
 
@@ -78,6 +79,8 @@ flasksearch/
 ├── api_docs/                # Bruno API documentation
 ├── data/                    # Sample data and scripts
 ├── tests/                   # Test files
+│   ├── conftest.py         # Test configuration and fixtures
+│   └── test_items.py       # Item endpoint tests
 ├── requirements.txt         # Python dependencies
 └── README.md
 ```
@@ -160,19 +163,58 @@ flask run
 
 The service will be available at `http://localhost:5001`
 
+### Testing
+
+The project includes a comprehensive test suite using pytest. The tests cover:
+
+1. **Authentication**
+   - Token validation
+   - Unauthorized access handling
+
+2. **Item Operations**
+   - Creating/updating items
+   - Retrieving items
+   - Error handling for non-existent items
+   - Input validation
+
+3. **Test Data**
+   - Uses real sample data from `data/test_establishments.json`
+   - Ensures realistic testing scenarios
+
+#### Running Tests
+
+```bash
+# Run all tests with verbose output
+pytest
+
+# Run specific test file
+pytest tests/test_items.py
+
+# Run specific test function
+pytest tests/test_items.py::test_create_item
+```
+
+#### Test Structure
+
+- `tests/conftest.py`: Contains test fixtures and configuration
+  - Flask test app setup
+  - Test client
+  - Sample data loading
+  - Authentication headers
+
+- `tests/test_items.py`: Item endpoint tests
+  - `test_create_item`: Tests item creation
+  - `test_get_item`: Tests item retrieval
+  - `test_get_nonexistent_item`: Tests 404 handling
+  - `test_create_item_without_auth`: Tests authentication
+  - `test_create_item_invalid_data`: Tests input validation
+
 ### Testing the API with Bruno
 
 1. Install Bruno from [https://www.usebruno.com/](https://www.usebruno.com/)
 2. Open the `api_docs` folder in Bruno
 3. Set up your environment variables in Bruno
 4. Use the provided request collections to test the API
-
-## Testing
-
-Run tests using:
-```bash
-pytest
-```
 
 ## Contributing
 
