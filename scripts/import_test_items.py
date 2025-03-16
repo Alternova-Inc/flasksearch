@@ -10,6 +10,7 @@ import os
 from dotenv import load_dotenv
 from concurrent.futures import ThreadPoolExecutor
 from tqdm import tqdm
+import time
 
 # Load environment variables
 load_dotenv()
@@ -56,18 +57,30 @@ def main():
     # Import items using thread pool for parallel processing
     results = []
     failed = []
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        futures = [
-            executor.submit(import_item, item, api_token, base_url)
-            for item in items
-        ]
+    
+    # Process in batches with delay between requests
+    batch_size = 10  # Process 10 items at a time
+    delay_seconds = 0.5  # Half second delay between requests
+    
+    for i in range(0, len(items), batch_size):
+        batch = items[i:i + batch_size]
         
-        # Process results with progress bar
-        for future in tqdm(futures, desc="Importing items"):
-            result = future.result()
-            results.append(result)
-            if result['status'] != 200:
-                failed.append(result)
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = [
+                executor.submit(import_item, item, api_token, base_url)
+                for item in batch
+            ]
+            
+            # Process batch results with progress bar
+            for future in tqdm(futures, desc=f"Importing batch {i//batch_size + 1}/{len(items)//batch_size + 1}"):
+                result = future.result()
+                results.append(result)
+                if result['status'] != 200:
+                    failed.append(result)
+                
+                # Add delay between requests
+                
+                time.sleep(delay_seconds)
     
     # Print summary
     success_count = len([r for r in results if r['status'] == 200])
@@ -82,4 +95,4 @@ def main():
                 print(f"  Error: {fail['response'].get('error', 'Unknown error')}")
 
 if __name__ == '__main__':
-    main() 
+    main()

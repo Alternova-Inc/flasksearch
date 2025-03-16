@@ -41,7 +41,7 @@ id_counter = 1
 
 # Generate 10 establishments per city (5 cities x 10 = 50 total)
 for city in cities:
-    for _ in range(10):
+    for _ in range(500):
         # Randomly select establishment type
         type_ = random.choice(types)
 
