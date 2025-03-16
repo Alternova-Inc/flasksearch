@@ -27,9 +27,28 @@ http://localhost:8080
 
 ### How It Works
 
-- The search input uses HTMX to make requests to the `/api/v1/suggestions` endpoint
+- The search input uses HTMX to make POST requests to the `/api/v1/suggestions` endpoint
 - Currently using a mock API implementation until the real backend endpoint is created
 - The mock API simulates network delay and filters suggestions based on the query
+
+## API Endpoints
+
+The backend provides one main endpoint:
+
+1. **Suggestions Endpoint**
+   - URL: `/api/v1/suggestions`
+   - Method: POST
+   - Headers: 
+     - `Content-Type: application/json`
+     - `X-API-Token: YOUR_API_TOKEN`
+   - Body:
+     ```json
+     {
+       "query": "search term",
+       "zipcode": "10001"
+     }
+     ```
+   - Response: List of suggestions with metadata
 
 ## Integration with Backend
 
@@ -37,7 +56,7 @@ When the real suggestions endpoint is implemented in the Flask backend:
 
 1. Remove the mock API script import from `index.html`
 2. Remove the HTMX request override in the JavaScript
-3. Update the HTMX attributes in the search input to point to the correct endpoint
+3. Update the API token in the HTMX headers attribute
 
 ## Mock Data
 
@@ -51,6 +70,7 @@ Each item includes:
 - Name
 - Category
 - Tags
+- Location (zipcode, latitude, longitude)
 
 ## Future Improvements
 

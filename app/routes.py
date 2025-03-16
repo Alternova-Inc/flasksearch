@@ -1,8 +1,8 @@
 # app/routes.py
 from urllib import request
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from .middleware.auth import require_api_token
-from .controllers.items import get_item, create_or_update_item, delete_item
+from .controllers.items import get_item, create_or_update_item, delete_item, search_items
 
 # Create blueprint for items API
 items_bp = Blueprint('items', __name__)
@@ -23,12 +23,22 @@ def update_item():
 def delete_item_route(id):
     return delete_item(id)
 
-@items_bp.route('/api/v1/items/search', methods=['GET'])
+# Suggestions endpoint for autocomplete
+@items_bp.route('/api/v1/suggestions', methods=['POST'])
 @require_api_token
-def search_items():
-    query = request.args.get('query', '')
-    zipcode = request.args.get('zipcode', '')
-    return jsonify(search_items(query, zipcode))
+def get_suggestions():
+    # Get query from POST body
+    query = request.form.get('query', '')
+    zipcode = request.form.get('zipcode', '')
+    
+    # Also check JSON data if Content-Type is application/json
+    if not query and request.is_json:
+        data = request.json
+        query = data.get('query', '')
+        zipcode = data.get('zipcode', '')
+    
+    # Use the search function with a smaller result size
+    return search_items(query, zipcode, 10)
 
 # Health check route
 def init_routes(app):
