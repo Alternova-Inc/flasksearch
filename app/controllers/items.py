@@ -58,4 +58,17 @@ def create_or_update_item():
         }), 400
     except Exception as e:
         current_app.logger.error(f"Error indexing item: {str(e)}")
-        return jsonify({"error": "Failed to index item"}), 500 
+        return jsonify({"error": "Failed to index item"}), 500
+
+def delete_item(item_id):
+    """Delete an item from Elasticsearch by its ID."""
+    try:
+        item_id = str(item_id)
+        from app.search_logic import es_client
+        response = es_client.delete(index="items", id=item_id)
+        if response.get('result') == 'deleted':
+            return True
+        else:
+            return False
+    except Exception as e:
+         return False 

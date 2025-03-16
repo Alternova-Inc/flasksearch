@@ -1,7 +1,7 @@
 # app/routes.py
 from flask import Blueprint, jsonify
 from .middleware.auth import require_api_token
-from .controllers.items import get_item, create_or_update_item
+from .controllers.items import get_item, create_or_update_item, delete_item
 
 # Create blueprint for items API
 items_bp = Blueprint('items', __name__)
@@ -16,6 +16,15 @@ def get_item_by_id(id):
 @require_api_token
 def update_item():
     return create_or_update_item()
+
+@items_bp.route('/api/v1/items/<id>', methods=['DELETE'])
+@require_api_token
+def delete_item_route(id):
+    result = delete_item(id)
+    if result:
+        return jsonify({"message": "Item successfully deleted", "id": str(id)}), 200
+    else:
+        return jsonify({"error": "Item not found"}), 404
 
 # Health check route
 def init_routes(app):
