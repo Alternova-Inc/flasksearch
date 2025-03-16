@@ -20,11 +20,7 @@ def update_item():
 @items_bp.route('/api/v1/items/<id>', methods=['DELETE'])
 @require_api_token
 def delete_item_route(id):
-    result = delete_item(id)
-    if result:
-        return jsonify({"message": "Item successfully deleted", "id": str(id)}), 200
-    else:
-        return jsonify({"error": "Item not found"}), 404
+    return delete_item(id)
 
 # Health check route
 def init_routes(app):

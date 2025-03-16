@@ -63,12 +63,15 @@ def create_or_update_item():
 def delete_item(item_id):
     """Delete an item from Elasticsearch by its ID."""
     try:
-        item_id = str(item_id)
-        from app.search_logic import es_client
-        response = es_client.delete(index="items", id=item_id)
+        es = current_app.elasticsearch
+        # First check if the item exists
+        if not es.exists(index=os.getenv('ELASTICSEARCH_INDEX', 'items'), id=str(item_id)):
+            return jsonify({"error": "can't find item"}), 404
+            
+        response = es.delete(index=os.getenv('ELASTICSEARCH_INDEX', 'items'), id=str(item_id))
         if response.get('result') == 'deleted':
-            return True
-        else:
-            return False
+            return jsonify({"message": "Item successfully deleted", "id": str(item_id)}), 200
+        
     except Exception as e:
-         return False 
+        current_app.logger.error(f"Error deleting item: {str(e)}")
+        return jsonify({"error": "Failed to delete item"}), 500

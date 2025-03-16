@@ -1,6 +1,8 @@
 import json
 import pytest
 from flask import current_app
+import uuid
+import random
 
 def test_create_item(client, auth_headers, sample_item):
     """Test creating a new item via PUT endpoint."""
@@ -89,4 +91,38 @@ def test_create_item_invalid_data(client, auth_headers):
     assert response.status_code == 400
     data = json.loads(response.data)
     assert data['error'] == 'Invalid request body'
-    assert 'Missing required field' in data['detail'] 
+    assert 'Missing required field' in data['detail']
+
+def test_delete_item(client, auth_headers, sample_item):
+    """Test creating a new item and then deleting it."""
+    # Create a copy of sample_item and assign a unique numerical id
+    item = sample_item.copy()
+    item['id'] = random.randint(100000, 999999)
+    print(item['id'])
+
+    # Create the new item
+    put_response = client.put(
+        '/api/v1/items',
+        data=json.dumps(item),
+        headers=auth_headers
+    )
+    assert put_response.status_code == 200
+
+    # Delete the item
+    del_response = client.delete(
+        f'/api/v1/items/{item["id"]}',
+        headers=auth_headers
+    )
+    assert del_response.status_code == 200
+    del_data = json.loads(del_response.data)
+    assert del_data['message'] == "Item successfully deleted"
+    assert del_data['id'] == str(item['id'])
+
+    # Attempt to get the deleted item; should return 404
+    get_response = client.get(
+        f'/api/v1/items/{item["id"]}',
+        headers=auth_headers
+    )
+    assert get_response.status_code == 404
+    get_data = json.loads(get_response.data)
+    assert get_data['error'] == "Item not found" 
