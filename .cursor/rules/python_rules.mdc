@@ -1,0 +1,7 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Python Guidelines
+- To have the correct environment run "conda activate flasksearch"
